@@ -110,6 +110,62 @@ def criar_logout() -> str:
 
     return montar_mensagem(LOGOUT)
 
+def criar_resposta_ok(texto: str) -> str:
+
+    texto = validar_texto(texto)
+    return montar_mensagem(OK, texto)
+
+
+def criar_resposta_erro(texto: str) -> str:
+
+    texto = validar_texto(texto)
+    return montar_mensagem(ERROR, texto)
+
+
+def criar_lista_usuarios(usuarios: list[str]) -> str:
+
+    usuarios_validados = [
+        validar_campo_simples(usuario, "Usuário")
+        for usuario in usuarios
+    ]
+
+    return montar_mensagem(
+        USERS,
+        *usuarios_validados,
+    )
+
+
+def criar_mensagem_recebida(
+    remetente: str,
+    texto: str,
+) -> str:
+
+    remetente = validar_campo_simples(
+        remetente,
+        "Remetente",
+    )
+
+    texto = validar_texto(texto)
+
+    return montar_mensagem(
+        MESSAGE,
+        remetente,
+        texto,
+    )
+
+
+def criar_confirmacao_envio(destinatario: str) -> str:
+
+    destinatario = validar_campo_simples(
+        destinatario,
+        "Destinatário",
+    )
+
+    return montar_mensagem(
+        SENT,
+        destinatario,
+    )
+
 
 def codificar_mensagem(mensagem: str) -> bytes:
 
