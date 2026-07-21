@@ -10,6 +10,11 @@ from chat_tcp.common.protocolo import (
     codificar_mensagem,
     interpretar_mensagem,
     montar_mensagem,
+    criar_confirmacao_envio,
+    criar_lista_usuarios,
+    criar_mensagem_recebida,
+    criar_resposta_erro,
+    criar_resposta_ok,
 )
 
 
@@ -106,6 +111,55 @@ class ProtocoloTests(unittest.TestCase):
     def test_tipo_desconhecido_deve_gerar_erro(self) -> None:
         with self.assertRaises(ValueError):
             montar_mensagem("COMANDO_INEXISTENTE")
+    
+    def test_criar_resposta_ok(self) -> None:
+        resultado = criar_resposta_ok(
+        "Login realizado"
+        )
+
+        self.assertEqual(
+            resultado,
+            "OK;Login realizado",
+        )
+
+    def test_criar_resposta_erro(self) -> None:
+        resultado = criar_resposta_erro(
+            "Apelido já está em uso"
+        )
+
+        self.assertEqual(
+            resultado,
+            "ERROR;Apelido já está em uso",
+        )
+
+    def test_criar_lista_usuarios(self) -> None:
+        resultado = criar_lista_usuarios(
+            ["ana", "henrique"]
+        )
+
+        self.assertEqual(
+            resultado,
+            "USERS;ana;henrique",
+        )
+
+    def test_criar_mensagem_recebida(self) -> None:
+        resultado = criar_mensagem_recebida(
+            "henrique",
+            "Olá",
+        )
+
+        self.assertEqual(
+            resultado,
+            "MESSAGE;henrique;Olá",
+        )
+
+    def test_criar_confirmacao_envio(self) -> None:
+        resultado = criar_confirmacao_envio("ana")
+
+        self.assertEqual(
+            resultado,
+            "SENT;ana",
+        )
 
 
 if __name__ == "__main__":
