@@ -31,8 +31,15 @@ class ServidorChat:
         )
 
         self._socket_servidor: socket.socket | None = None
+        self._ativo = False
+        self._threads_clientes: list[threading.Thread] = []
 
     def iniciar(self) -> None:
+
+        if self._ativo:
+            raise RuntimeError(
+                "O servidor já está em execução"
+            )
 
         self._socket_servidor = socket.socket(
             socket.AF_INET,
@@ -50,17 +57,32 @@ class ServidorChat:
         )
 
         self._socket_servidor.listen()
+        self._socket_servidor.settimeout(0.5)
+
+        self._ativo = True
+
+        endereco_real = (
+            self._socket_servidor.getsockname()
+        )
 
         print(
             f"Servidor iniciado em "
-            f"{self._host}:{self._porta}"
+            f"{endereco_real[0]}:{endereco_real[1]}"
         )
 
         try:
-            while True:
-                conexao, endereco = (
-                    self._socket_servidor.accept()
-                )
+            while self._ativo:
+                try:
+                    conexao, endereco = (
+                        self._socket_servidor.accept()
+                    )
+                except socket.timeout:
+                    continue
+                except OSError:
+                    if not self._ativo:
+                        break
+
+                    raise
 
                 print(
                     "Nova conexão recebida de "
@@ -71,6 +93,10 @@ class ServidorChat:
                     target=self._atender_cliente,
                     args=(conexao, endereco),
                     daemon=True,
+                )
+
+                self._threads_clientes.append(
+                    thread_cliente
                 )
 
                 thread_cliente.start()
@@ -161,14 +187,37 @@ class ServidorChat:
 
     def encerrar(self) -> None:
 
+        self._ativo = False
+        
         if self._socket_servidor is not None:
+            try:
+                self._socket_servidor.shutdown(
+                    socket.SHUT_RDWR
+                )
+            except OSError:
+                pass
+
             try:
                 self._socket_servidor.close()
             except OSError:
                 pass
 
             self._socket_servidor = None
+    
+    @property
+    def porta(self) -> int:
 
+        if self._socket_servidor is not None:
+            return self._socket_servidor.getsockname()[1]
+
+        return self._porta
+
+
+    @property
+    def ativo(self) -> bool:
+        """Informa se o servidor está em execução."""
+
+        return self._ativo
 
 def iniciar_servidor() -> None:
 
