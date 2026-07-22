@@ -12,7 +12,6 @@ from chat_tcp.common.protocolo import (
     interpretar_mensagem,
 )
 
-
 class InterfaceTerminal:
 
     def __init__(self) -> None:
@@ -90,7 +89,6 @@ class InterfaceTerminal:
         if entrada == "/logout":
             self._cliente.enviar_logout()
             self._executando = False
-            self._cliente.encerrar()
             return
 
         if entrada == "/help":
@@ -206,13 +204,6 @@ class InterfaceTerminal:
         self._evento_login.set()
 
     def _encerrar_cliente(self) -> None:
-        """Finaliza os recursos utilizados pelo cliente."""
-
-        if self._cliente.esta_conectado():
-            try:
-                self._cliente.enviar_logout()
-            except ConnectionError:
-                pass
 
         self._cliente.encerrar()
 
