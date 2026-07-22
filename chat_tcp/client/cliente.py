@@ -1,5 +1,3 @@
-"""Implementação principal do cliente TCP."""
-
 import socket
 import threading
 from collections.abc import Callable
