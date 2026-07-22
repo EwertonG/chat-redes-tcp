@@ -1,27 +1,23 @@
-# Chat TCP
+# ChatRedes TCP
 
-Sistema de chat cliente-servidor desenvolvido para o Trabalho Prático de Redes de Computadores 1.
+Aplicação de chat desenvolvida em Python utilizando comunicação por sockets TCP.
 
-## Objetivo
+O sistema permite que vários clientes se conectem a um servidor central, realizem login com um apelido, consultem os usuários conectados e enviem mensagens privadas.
 
-Implementar uma aplicação distribuída em Python na qual vários clientes se comunicam por meio de um servidor central utilizando sockets TCP.
+## Integrantes
 
-## Funcionalidades previstas
+- Ana Clara Francisca
+- Ewerton Gomes Barcia
 
-- cadastro por apelido;
-- múltiplos clientes conectados simultaneamente;
-- lista de usuários online;
-- mensagens públicas;
-- mensagens privadas;
-- detecção de desconexões;
-- encerramento adequado da conexão;
-- interface gráfica com Tkinter.
+## Funcionalidades
 
-## Tecnologias
-
-- Python 3;
-- sockets TCP;
-- threads;
-- JSON;
-- Tkinter;
-- Wireshark.
+- comunicação cliente-servidor usando TCP;
+- conexão de vários clientes ao mesmo tempo;
+- uso de uma thread para cada cliente conectado;
+- validação de apelidos duplicados;
+- listagem de usuários conectados;
+- envio de mensagens privadas;
+- encerramento de sessão com logout;
+- tratamento de desconexões inesperadas;
+- testes unitários;
+- testes de integração com sockets reais.
