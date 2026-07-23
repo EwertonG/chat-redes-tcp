@@ -1,5 +1,3 @@
-"""Recebimento assíncrono de mensagens do servidor."""
-
 import socket
 import threading
 from collections.abc import Callable
