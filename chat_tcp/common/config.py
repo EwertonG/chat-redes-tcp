@@ -6,7 +6,6 @@ HOST_SERVIDOR = "0.0.0.0"
 
 PORTA = 5000
 
-# Quantidade máxima de bytes lidos por operação
 TAMANHO_BUFFER = 1024
 
 CODIFICACAO = "utf-8"

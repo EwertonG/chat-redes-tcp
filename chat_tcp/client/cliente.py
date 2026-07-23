@@ -1,5 +1,3 @@
-"""Implementação principal do cliente TCP."""
-
 import socket
 import threading
 from collections.abc import Callable
@@ -79,7 +77,6 @@ class ClienteChat:
         )
 
     def solicitar_lista(self) -> None:
-        """Envia o comando LIST."""
 
         self.enviar(
             criar_solicitacao_lista()

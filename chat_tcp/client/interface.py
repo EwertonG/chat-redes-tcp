@@ -1,5 +1,3 @@
-"""Interface de terminal do cliente."""
-
 import threading
 
 from chat_tcp.client.cliente import ClienteChat
